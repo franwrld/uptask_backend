@@ -13,8 +13,7 @@ export class TaskController {
             // Asignar tarea al project
             req.project.tasks.push(task.id)
             // Guardar
-            await task.save()
-            await req.project.save()
+            await Promise.allSettled([task.save(), req.project.save()])
             res.send('Tarea creada correctamente')
         } catch (error) {
             console.log(error)
