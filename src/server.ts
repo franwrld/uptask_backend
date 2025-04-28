@@ -6,7 +6,6 @@ import { corsConfig } from './config/cors'
 import { connectDB } from "./config/db";
 import projectRoutes from './routes/projectRoutes'
 import authRoutes from './routes/authRoutes'
-import projectRoutes from './routes/projectRoutes'
 
 dotenv.config()
 connectDB()
