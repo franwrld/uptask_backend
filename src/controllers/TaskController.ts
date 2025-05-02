@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import colors from 'colors'
 
 import Task from "../models/Task";
 
@@ -31,14 +32,17 @@ export class TaskController {
     // Obtener tarea por su ID
     static getTaskById = async (req: Request, res: Response) => {
         try {
-            const task = await Task.findById(req.task.id)
-                .populate({path: 'completedBy.user', select: 'id name email'})
-                .populate({path: 'notes', populate: {path: 'createdBy', select: 'id name email' }})
-            res.json(req.task)
+          console.log({ taskId: req.params.taskId, task: req.task });
+     
+          const task = await Task.findById(req.task.id)
+            .populate({ path: 'completedBy.user', select: 'id name email' })
+            .populate({ path: 'notes', populate: { path: 'createdBy', select: 'id name email' } });
+          res.json(task);
         } catch (error) {
-            res.status(500).json({error: 'Hubo un error'})
+          console.log(colors.red.bold(`Error: ${error}`));
+          res.status(500).json({ error: 'Hubo un error' });
         }
-    }
+      };
     // Actualizar Tarea
     static updateTask = async (req: Request, res: Response) => {
         try {
